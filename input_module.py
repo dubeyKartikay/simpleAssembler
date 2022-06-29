@@ -15,13 +15,14 @@ def get_raw_file (filename):
                foundHalt = True
           # line = line.split()
            if line != ['']:
-            lines.append(line.append(lineNumber))
+            line.append(lineNumber)
+            lines.append(line)
 
     if (not(foundHalt)):
-        errorHandler.handle(8)
+        errorHandler.handle(8,12)
     elif (lines[-1][0] != "hlt"):
-        errorHandler.handle(9)
-            
+        errorHandler.handle(9,12)
+#    
     return lines
     
     
