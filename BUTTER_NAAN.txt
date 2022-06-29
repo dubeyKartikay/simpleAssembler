@@ -1,11 +1,6 @@
 var X
 mov R1 $10
-.label1
-mov R2 $100
-
-
+mov R2 R1
 mul R3 R1 R2
-je label1
-hlt
 st R3 X
 hlt

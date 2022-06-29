@@ -14,7 +14,7 @@ def get_raw_file (filename):
            if "hlt" in  line:
                foundHalt = True
           # line = line.split()
-           if line != ['']:
+           if line != [''] and line != []:
             line.append(lineNumber)
             lines.append(line)
 
