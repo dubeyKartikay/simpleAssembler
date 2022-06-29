@@ -1,5 +1,6 @@
 
 from utils import getBin8Bits
+from errorHandler import ErrorHandler
 class Assembler:
     def __init__(self,regAddr,instructionTypeDict,unusedBitsDict):
         self.regAddrTable = regAddr
@@ -12,6 +13,7 @@ class Assembler:
         self.processedInput=[]
         self.variableCount =0 
         self.unusedBitsTable = unusedBitsDict
+        self.errorHandler = ErrorHandler()
         
     def pass1 (self):
         for line in self.raw_input:
@@ -22,14 +24,12 @@ class Assembler:
             if (line[0][-1] == ":"):
                 self.labesTable[line[0][:-1]] = self.locationCounter
                 continue 
-            line_processed = [self.locationCounter] + line
             self.locationCounter+=1
-            self.processedInput.append(line_processed)
+            self.processedInput.append(line)
     def setRawInput(self,inp):
         self.raw_input = inp       
     def pass2(self):
         for line in self.processedInput:
-            line = line[1:-1]
             opcode = self.isaInstructions[line[0]]
             if line[0] == "mov":
                 if "$" in line[2]:
@@ -41,6 +41,9 @@ class Assembler:
                     #Error
             binary = opcode[0]+ "0"* self.unusedBitsTable[opcode[1]]
             for ins in line[1:]:
+            
+                if type(ins) == int:
+                    continue
                 if ins in self.regAddrTable.keys():
                     binary = binary + self.regAddrTable[ins]
                     continue
