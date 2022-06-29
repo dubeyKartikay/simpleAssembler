@@ -8,7 +8,7 @@ class Assembler:
         self.variableTable = {}
         self.labesTable = {}
         self.locationCounter = 0
-        self.raw_input = [];
+        self.raw_input = []
         self.output = []
         
     def pass1 (self):
