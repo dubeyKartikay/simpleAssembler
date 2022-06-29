@@ -1,7 +1,6 @@
-from re import X
 
 
-class Assemnler:
+class Assembler:
     def __init__(self,opcodeDict,instructionTypeDict):
         self.opcodeDict = opcodeDict
         self.instructionTypeDict = instructionTypeDict
@@ -13,7 +12,8 @@ class Assemnler:
         self.output = []
         
     def pass1 (self):
-        pass
+        for line in self.raw_input:
+            pass
     def pass2(self):
         pass
     def compile(self):
