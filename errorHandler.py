@@ -35,30 +35,51 @@ class ErrorHandler:
             line_Number=line[-1]
             self.handle(errorcode,line_Number)
         else:
-            b=line[1]
-            if(b not in asm.Reg_Adress and b!='FLAGS'):
-                errorcode=1
-                line_number=line[-1]
-                self.handle(errorcode,line_number)
-            elif(b in asm.Reg_Adress and b!="FLAGS"):
-                if(a=='add' or a=='sub' or a=='mul' or a=='xor' or a=='or' or a=='and'):
+            if(a=='add' or a=='sub' or a=='mul' or a=='xor' or a=='or' or a=='and'):
+                    b=line[1]
                     c=line[2]
                     d=line[3]
-                    if((c not in asm.Reg_Adress and c!='FLAGS') or (d not in asm.Reg_Adress and d!='FLAGS')):
+                    if((c not in asm.Reg_Adress and c!='FLAGS') or (d not in asm.Reg_Adress and d!='FLAGS') or (b not in asm.Reg_Adress and b!='FLAGS')):
                         errorcode=1
                         line_number=line[-1]
                         self.handle(errorcode,line_number)
-                elif(a=='mov' or a=='div' or a=='not' or a=='cmp'):
+            elif((a=='mov' and line[2][0]!="$") or a=='div' or a=='not' or a=='cmp'):
+                    b=line[1]
                     c=line[2]
-                    if(c not in asm.Reg_Adress and c!='FLAGS'):
+                    if((c not in asm.Reg_Adress and c!='FLAGS') or (d not in asm.Reg_Adress and d!='FLAGS')):
                         errorcode=1
                         line_number=line[-1]
                         self.handle(errorcode,line_number)  
-            elif(a=='ld' or a=='st' or a=='jmp' or a=='jlt' or a=='jgt' or a=='je'): 
-
-
-
-
-
-
-
+            elif(a=='jlt' or a=='jgt' or a=='je' or (a=='mov' and line[2][0]=='$')): 
+                    b=line[1]
+                    c=line[2]
+                    if((b not in asm.Reg_Adress and d!='FLAGS')):
+                        errorcode=1
+                        line_number=line[-1]
+                        self.handle(errorcode,line_number)
+                    elif(c not in self.label_list):
+                        errorcode=3
+                        line_number=line[-1]
+                        self.handle(errorcode,line_number)
+            elif(a=='ld' or a=='st'):
+                    b=line[1]
+                    c=line[2]
+                    if((b not in asm.Reg_Adress and d!='FLAGS') and c not in self.varlist):
+                        errorcode=2
+                        line_number=line[-1]
+                        self.handle(errorcode,line_number)
+            elif(a=='ls' or a=='ls' or (a=='mov' and line[2][0]=='$')):
+                    b=line[1]
+                    c=line[2]
+                    d=c[1:]
+                    d=int(d)
+                    if(b not in asm.Reg_Adress and d!='FLAGS'):
+                        errorcode=1
+                        line_number=line[-1]
+                        self.handle(errorcode,line_number)
+                    if(d>255):
+                        errorcode=5
+                        line_number=line[-1]
+                        self.handle(errorcode,line_number)
+            elif(a=='hlt'):
+                #yaha se khud kro ab thoda!! isse zyada mazdoori nhi hoti merese
