@@ -1,13 +1,8 @@
 import asm as asm
 class ErrorHandler:
-<<<<<<< HEAD
     def __init__(self,varlist = None,label_list= None):
-=======
-    def __init__(self,varlist,label_list,n):
->>>>>>> fa81f007d53a293bd0e632b04bdf369ef3b1e3b2
         self.varlist=varlist
         self.label_list=label_list
-        self.n=n
     
     def handle(self,errorCode,lineNumber=""):
         if(errorCode==1):
