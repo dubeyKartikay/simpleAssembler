@@ -1,8 +1,9 @@
 import asm as asm
 class ErrorHandler:
-    def __init__(self,varlist,label_list):
+    def __init__(self,varlist,label_list,n):
         self.varlist=varlist
         self.label_list=label_list
+        self.n=n
     
     def handle(self,errorCode,lineNumber):
         if(errorCode==1):
@@ -81,8 +82,15 @@ class ErrorHandler:
                         errorcode=5
                         line_number=line[-1]
                         self.handle(errorcode,line_number)
-            if(a=='hlt'):
-                    if(line[-1]!='hlt'):
-                        errorcode=1
+            elif(a=='hlt'):
+                    if(line[-1]!=self.n):
+                        errorcode=8
                         line_number=line[-1]
                         self.handle(errorcode,line_number)
+            elif(line[-1]==self.n and a!='hlt'):
+                    line_number=line[-1]
+                    errorcode=9
+                    self.handle(errorcode,line_number)
+                    
+                    
+            
