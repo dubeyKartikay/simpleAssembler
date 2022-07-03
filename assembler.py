@@ -37,7 +37,7 @@ class Assembler:
     def pass2(self):
         for line in self.processedInput:
             # print(line)
-            if(self.errorHandler.checkLine(line) == -1):
+            if(self.errorHandler.errorCheck(line) == -1):
                 continue
             opcode = self.isaInstructions[line[0]]
             if line[0] == "mov":
