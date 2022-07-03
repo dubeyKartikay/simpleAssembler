@@ -47,7 +47,7 @@ class ErrorHandler:
         else:
             if ("FLAGS" in line):
                 if(a!= "mov"):
-                    self.handle(4,line[-1])
+                    return self.handle(4,line[-1])
             if(a=='add' or a=='sub' or a=='mul' or a=='xor' or a=='or' or a=='and'):
                     b=line[1]
                     c=line[2]
