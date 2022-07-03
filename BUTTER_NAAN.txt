@@ -1,8 +1,8 @@
 var X
 var Z
 var Y
-label1:
-mov R2 $10
+label1: mov R2 $10
+st R3 FLAGS
 mov R2 $100
 mul R3 R1 R2
 st  R3  X

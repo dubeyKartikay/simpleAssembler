@@ -25,7 +25,10 @@ class Assembler:
                 continue
             if (line[0][-1] == ":"):
                 self.labesTable[line[0][:-1]] = self.locationCounter
-                continue 
+                if( len(line) == 2):
+                    continue
+                else:
+                    line = line[1:]
             self.locationCounter+=1
             self.processedInput.append(line)
         self.errorHandler = ErrorHandler(self.variableTable.keys(),self.labesTable.keys())
@@ -34,7 +37,7 @@ class Assembler:
     def pass2(self):
         for line in self.processedInput:
             # print(line)
-            if(self.errorHandler.check(line) == -1):
+            if(self.errorHandler.checkLine(line) == -1):
                 continue
             opcode = self.isaInstructions[line[0]]
             if line[0] == "mov":

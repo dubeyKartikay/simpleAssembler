@@ -31,13 +31,23 @@ class ErrorHandler:
             print("General Syntax Error at line number",lineNumber)
         return -1
 
-    def check(self,line):
+    def errorCheck(self,line):
+        try:
+            ans = self.checkLine(line)
+        except :
+            ans = -1
+            self.handle(11,line[-1])
+        return ans
+    def checkLine(self,line):
         a=line[0]
         if(a not in asm.ISA_Dict ):
             errorcode=1
             line_Number=line[-1]
             return self.handle(errorcode,line_Number)
         else:
+            if ("FLAGS" in line):
+                if(a!= "mov"):
+                    self.handle(4,line[-1])
             if(a=='add' or a=='sub' or a=='mul' or a=='xor' or a=='or' or a=='and'):
                     b=line[1]
                     c=line[2]
@@ -50,7 +60,7 @@ class ErrorHandler:
             elif((a=='mov' and line[2][0]!="$") or a=='div' or a=='not' or a=='cmp'):
                     b=line[1]
                     c=line[2]
-                    if((c not in asm.Reg_Adress.keys() and c!='FLAGS') or (d not in asm.Reg_Adress.keys() and d!='FLAGS')):
+                    if((c not in asm.Reg_Adress.keys() and c!='FLAGS') or (b not in asm.Reg_Adress.keys() and b!='FLAGS')):
                         errorcode=1
                         line_number=line[-1]
                         return self.handle(errorcode,line_number)  
@@ -68,7 +78,7 @@ class ErrorHandler:
                         errorcode=1
                         line_number=line[-1]
                         return self.handle(errorcode,line_number)
-                    if (c not in self.varlist):
+                    if (c not in self.varlist and c!="FLAGS"):
                         if (c in self.label_list):
                             return self.handle(6,line[-1])
                         else:
@@ -78,7 +88,7 @@ class ErrorHandler:
                     c=line[2]
                     d=c[1:]
                     d=int(d)
-                    if(b not in asm.Reg_Adress.keys() and d!='FLAGS'):
+                    if(b not in asm.Reg_Adress.keys() and b!='FLAGS'):
                         errorcode=1
                         line_number=line[-1]
                         return self.handle(errorcode,line_number)
@@ -91,3 +101,4 @@ class ErrorHandler:
                         errorcode=1
                         line_number=line[-1]
                         return self.handle(errorcode,line_number)
+            return 0
