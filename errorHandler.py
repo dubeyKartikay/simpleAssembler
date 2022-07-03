@@ -3,8 +3,10 @@ class ErrorHandler:
     def __init__(self,varlist = None,label_list= None):
         self.varlist=varlist
         self.label_list=label_list
+        self.errorState = 0
     
     def handle(self,errorCode,lineNumber=""):
+        self.errorState =1
         if(errorCode==1):
             print("Typos in instruction name or register name at line number",lineNumber)
         if(errorCode==2):

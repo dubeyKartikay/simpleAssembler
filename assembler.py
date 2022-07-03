@@ -13,11 +13,13 @@ class Assembler:
         self.processedInput=[]
         self.variableCount =0 
         self.unusedBitsTable = unusedBitsDict
-        self.errorHandler = None
+        self.errorHandler = ErrorHandler()
         
     def pass1 (self):
-        for line in self.raw_input:
+        for index,line in enumerate(self.raw_input):
             if (line[0] == 'var'):
+                if(index -1 >= 0 and self.raw_input[index - 1][0] != "var"):
+                    self.errorHandler.handle(7)
                 self.variableTable[line[1]] = self.variableCount
                 self.variableCount+=1
                 continue
@@ -31,7 +33,7 @@ class Assembler:
         self.raw_input = inp       
     def pass2(self):
         for line in self.processedInput:
-            print(line)
+            # print(line)
             if(self.errorHandler.check(line) == -1):
                 continue
             opcode = self.isaInstructions[line[0]]
