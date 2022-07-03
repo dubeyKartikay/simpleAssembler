@@ -81,5 +81,8 @@ class ErrorHandler:
                         errorcode=5
                         line_number=line[-1]
                         self.handle(errorcode,line_number)
-            elif(a=='hlt'):
-                #yaha se khud kro ab thoda!! isse zyada mazdoori nhi hoti merese
+            if(a=='hlt'):
+                    if(line[-1]!='hlt'):
+                        errorcode=1
+                        line_number=line[-1]
+                        self.handle(errorcode,line_number)
