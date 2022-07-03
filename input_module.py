@@ -22,7 +22,7 @@ def get_raw_file (filename):
         errorHandler.handle(8,"NA")
     elif (foundHalt >1):
         errorHandler.handle(10,"NA")
-    elif (lines[-1][0] != "hlt"):
+    elif (lines[-1][-2] != "hlt"):
         errorHandler.handle(9,"NA")
 #    
     return lines
