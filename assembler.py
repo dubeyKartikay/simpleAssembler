@@ -13,7 +13,7 @@ class Assembler:
         self.processedInput=[]
         self.variableCount =0 
         self.unusedBitsTable = unusedBitsDict
-        self.errorHandler = ErrorHandler()
+        self.errorHandler = None
         
     def pass1 (self):
         for line in self.raw_input:
@@ -26,10 +26,14 @@ class Assembler:
                 continue 
             self.locationCounter+=1
             self.processedInput.append(line)
+        self.errorHandler = ErrorHandler(self.variableTable.keys(),self.labesTable.keys())
     def setRawInput(self,inp):
         self.raw_input = inp       
     def pass2(self):
         for line in self.processedInput:
+            print(line)
+            if(self.errorHandler.check(line) == -1):
+                continue
             opcode = self.isaInstructions[line[0]]
             if line[0] == "mov":
                 if "$" in line[2]:

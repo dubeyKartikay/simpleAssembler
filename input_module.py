@@ -3,7 +3,7 @@ def get_raw_file (filename):
     errorHandler = ErrorHandler()
     lines =[]
     lineNumber = 0
-    foundHalt =False
+    foundHalt =0
     with open(filename,"r") as file:
         for line in file.readlines():
            lineNumber+=1
@@ -12,16 +12,18 @@ def get_raw_file (filename):
            line = line.replace(","," ")
            line = line.split()
            if "hlt" in  line:
-               foundHalt = True
+               foundHalt += 1
           # line = line.split()
            if line != [''] and line != []:
             line.append(lineNumber)
             lines.append(line)
 
-    if (not(foundHalt)):
-        errorHandler.handle(8,12)
+    if (foundHalt==0):
+        errorHandler.handle(8,"NA")
+    elif (foundHalt >1):
+        errorHandler.handle(10,"NA")
     elif (lines[-1][0] != "hlt"):
-        errorHandler.handle(9,12)
+        errorHandler.handle(9,"NA")
 #    
     return lines
     
