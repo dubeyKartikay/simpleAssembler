@@ -53,20 +53,32 @@ class ErrorHandler:
                     b=line[1]
                     c=line[2]
                     d=line[3]
-  
-                    if((c not in asm.Reg_Adress.keys() and c!='FLAGS') or (d not in asm.Reg_Adress.keys() and d!='FLAGS') or (b not in asm.Reg_Adress.keys() and b!='FLAGS')):
+                    if(len(line)!=5):
+                        errorcode=11
+                        line_number=line[-1]
+                        return self.handle(errorcode,line_number)
+                    elif((c not in asm.Reg_Adress.keys() and c!='FLAGS') or (d not in asm.Reg_Adress.keys() and d!='FLAGS') or (b not in asm.Reg_Adress.keys() and b!='FLAGS')):
                         errorcode=1
                         line_number=line[-1]
                         return self.handle(errorcode,line_number)
+
             elif((a=='mov' and line[2][0]!="$") or a=='div' or a=='not' or a=='cmp'):
                     b=line[1]
                     c=line[2]
-                    if((c not in asm.Reg_Adress.keys() and c!='FLAGS') or (b not in asm.Reg_Adress.keys() and b!='FLAGS')):
+                    if(len(line)!=4):
+                        errorcode=11
+                        line_number=line[-1]
+                        return self.handle(errorcode,line_number)
+                    elif((c not in asm.Reg_Adress.keys() and c!='FLAGS') or (b not in asm.Reg_Adress.keys() and b!='FLAGS')):
                         errorcode=1
                         line_number=line[-1]
                         return self.handle(errorcode,line_number)  
             elif(a=='jlt' or a=='jgt' or a=='je' or a == "jmp"): 
                     b=line[1]
+                    if(len(line)!=3):
+                        errorcode=11
+                        line_number=line[-1]
+                        return self.handle(errorcode,line_number)
                     if (b not in self.label_list):
                         if (b in self.varlist):
                             return self.handle(6,line[-1])
@@ -75,6 +87,10 @@ class ErrorHandler:
             elif(a=='ld' or a=='st'):
                     b=line[1]
                     c=line[2]
+                    if(len(line)!=4):
+                        errorcode=11
+                        line_number=line[-1]
+                        return self.handle(errorcode,line_number)
                     if((b not in asm.Reg_Adress.keys() and b!='FLAGS')):
                         errorcode=1
                         line_number=line[-1]
@@ -89,6 +105,10 @@ class ErrorHandler:
                     c=line[2]
                     d=c[1:]
                     d=int(d)
+                    if(len(line)!=4):
+                        errorcode=11
+                        line_number=line[-1]
+                        return self.handle(errorcode,line_number)
                     if(b not in asm.Reg_Adress.keys() and b!='FLAGS'):
                         errorcode=1
                         line_number=line[-1]
@@ -98,7 +118,11 @@ class ErrorHandler:
                         line_number=line[-1]
                         return self.handle(errorcode,line_number)
             if(a=='hlt'):
-                    if(line[-2]!='hlt'):
+                    if(len(line)!=2):
+                        errorcode=11
+                        line_number=line[-1]
+                        return self.handle(errorcode,line_number)
+                    elif(line[-2]!='hlt'):
                         errorcode=1
                         line_number=line[-1]
                         return self.handle(errorcode,line_number)
