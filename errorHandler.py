@@ -1,3 +1,4 @@
+import sys
 import asm as asm
 class ErrorHandler:
     def __init__(self,varlist = None,label_list= None):
@@ -8,27 +9,27 @@ class ErrorHandler:
     def handle(self,errorCode,lineNumber=""):
         self.errorState =1
         if(errorCode==1):
-            print("Typos in instruction name or register name at line number",lineNumber)
+            sys.stdout.write("Typos in instruction name or register name at line number" + " " +str(lineNumber) + "\n")
         if(errorCode==2):
-            print("Use of undefined variables at line number",lineNumber)
+            sys.stdout.write("Use of undefined variables at line number" + " " +str(lineNumber) + "\n")
         if(errorCode==3):
-            print("Use of undefined labels at line number",lineNumber)
+            sys.stdout.write("Use of undefined labels at line number" + " " +str(lineNumber) + "\n")
         if(errorCode==4):
-            print("Illegal use of FLAGS register at line number",lineNumber)
+            sys.stdout.write("Illegal use of FLAGS register at line number" + " " +str(lineNumber) + "\n")
         if(errorCode==5):
-            print("Illegal Immediate values (more than 8 bits) at line number",lineNumber)
+            sys.stdout.write("Illegal Immediate values (more than 8 bits) at line number" + " " +str(lineNumber) + "\n")
         if(errorCode==6):
-            print("Misuse of labels as variables or vice-versa at line number",lineNumber)
+            sys.stdout.write("Misuse of labels as variables or vice-versa at line number" + " " +str(lineNumber) + "\n")
         if(errorCode==7):
-            print("Variables not declared at the beginning ")
+            sys.stdout.write("Variables not declared at the beginning \n")
         if(errorCode==8):
-            print("Missing hlt instruction")
+            sys.stdout.write("Missing hlt instruction\n")
         if(errorCode==9):
-            print("halt not being used as the last instruction ")
+            sys.stdout.write("halt not being used as the last instruction \n")
         if(errorCode==10):
-            print("multiple halts used")
+            sys.stdout.write("multiple halts used\n")
         if(errorCode==11):
-            print("General Syntax Error at line number",lineNumber)
+            sys.stdout.write("General Syntax Error at line number" + " " +str(lineNumber) + "\n")
         return -1
 
     def errorCheck(self,line):
