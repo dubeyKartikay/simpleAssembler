@@ -1,7 +1,6 @@
 from sys import stdin
-from errorHandler import ErrorHandler
-def get_raw_file (filename):
-    errorHandler = ErrorHandler()
+
+def get_raw_file (filename,asm):
     lines =[]
     lineNumber = 0
     foundHalt =0
@@ -20,11 +19,14 @@ def get_raw_file (filename):
             lines.append(line)
 
     if (foundHalt==0):
-        errorHandler.handle(8,"NA")
+       asm.errorHandler.handle(8,"NA")
+    #    asm.errorHandler.errorState = 1
     elif (foundHalt >1):
-        errorHandler.handle(10,"NA")
+       asm.errorHandler.handle(10,"NA")
+    #    asm.errorHandler.errorState = 1
     elif (lines[-1][-2] != "hlt"):
-        errorHandler.handle(9,"NA")
+       asm.errorHandler.handle(9,"NA")
+    #    asm.errorHandler.errorState = 1 
 #    
     return lines
     

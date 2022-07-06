@@ -31,7 +31,8 @@ class Assembler:
                     line = line[1:]
             self.locationCounter+=1
             self.processedInput.append(line)
-        self.errorHandler = ErrorHandler(self.variableTable.keys(),self.labesTable.keys())
+        self.errorHandler.varlist = self.variableTable.keys()
+        self.errorHandler.label_list = self.labesTable.keys()
     def setRawInput(self,inp):
         self.raw_input = inp       
     def pass2(self):
