@@ -24,10 +24,13 @@ class ErrorHandler:
             sys.stdout.write("Variables not declared at the beginning \n")
         if(errorCode==8):
             sys.stdout.write("Missing hlt instruction\n")
+            sys.exit()
         if(errorCode==9):
             sys.stdout.write("halt not being used as the last instruction \n")
+            sys.exit()
         if(errorCode==10):
             sys.stdout.write("multiple halts used\n")
+            sys.exit()
         if(errorCode==11):
             sys.stdout.write("General Syntax Error at line number" + " " +str(lineNumber) + "\n")
         return -1
@@ -113,7 +116,7 @@ class ErrorHandler:
                         errorcode=1
                         line_number=line[-1]
                         return self.handle(errorcode,line_number)
-                    if(d>255):
+                    if(not(0<=d<=255)):
                         errorcode=5
                         line_number=line[-1]
                         return self.handle(errorcode,line_number)
