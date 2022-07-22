@@ -3,6 +3,7 @@ class SIM:
         self.arr=arr
         self.n=len(arr)
         self.dict=dict
+        self.halted=0
     def bintodec(self,bin):
         n=len(bin)
         sum=0
@@ -113,11 +114,27 @@ class SIM:
                 self.dict['111'][15]='1'
                 PC+=1
         elif(arr[0]=='jmp'):
-            pcnew=int(arr[2])
+            pcnew=int(arr[1])
             PC=pcnew
         elif(arr[0]=='jlt'):
-            
-                    
-                    
+            pcnew=int(arr[1])
+            if(self.dict['111'][13]==1):
+                PC=pcnew
+            else:
+                PC=PC+1
+        elif(arr[0]=='jgt'):
+            pcnew=int(arr[1])
+            if(self.dict['111'][14]==1):
+                PC=pcnew
+            else:
+                PC=PC+1
+        elif(arr[0]=='je'):
+            pcnew=int(arr[1])
+            if(self.dict['111'][15]==1):
+                PC=pcnew
+            else:
+                PC=PC+1            
+        elif(arr[0]=='hlt'):
+            self.halted=1           
             
                         
