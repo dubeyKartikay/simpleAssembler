@@ -1,4 +1,4 @@
-class execute:
+class SIM:
     def __init__(self,arr,dict):
         self.arr=arr
         self.n=len(arr)
@@ -19,16 +19,18 @@ class execute:
             k=str(k)
             j=j+k
         j=j[::-1]
-        return j
-        
-    def exe(self):
+        j=str(j)
+        result=""
+        result+="0"*(16-len(j))
+        result+=j
+        return result    
+    def execute(self):
         if(arr[0]=='add'):
             a=self.bintodec(arr[1])
             b=self.bintodec(arr[2])
             c=""
             c=dectobin(a+b)
-            
-            
-            
+            self.dict[arr[3]]=c    
+        
             
                         
