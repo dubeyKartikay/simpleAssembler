@@ -31,6 +31,14 @@ class SIM:
             c=""
             c=dectobin(a+b)
             self.dict[arr[3]]=c    
+        if(arr[0]=='sub'):
+            a=self.bintodec(arr[1])
+            b=self.bintodec(arr[2])
+            c=""
+            c=dectobin(a-b)
+            self.dict[arr[3]]=c 
+        if(arr[0]=='mov'):
+            
         
             
                         
