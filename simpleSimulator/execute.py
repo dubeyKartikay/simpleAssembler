@@ -135,6 +135,4 @@ class SIM:
             else:
                 PC=PC+1            
         elif(arr[0]=='hlt'):
-            self.halted=1           
-            
-                        
+            self.halted=1                          
