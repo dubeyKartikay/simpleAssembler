@@ -64,11 +64,7 @@ class Decoder:
             madd =self.bintodec(madd)
             v1=self.reg_in[madd]
             a.append(v1)
-        elif(type =='F'):    
-                
-        # func=self.isa_dict[opcode]
-        type=self.isa_dict[opcode]
-        unusedbits=self.unUsedBitsTable[type]        
+                      
         return a
     
 # #1010100100000111
