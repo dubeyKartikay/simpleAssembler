@@ -38,8 +38,8 @@ class Decoder:
             v1=self.reg_in[imm]
             a.append(r1)
             a.append(v1)
-        elif(type=='C'):
-            if(func ='div'):
+        elif(type =='C'):
+            if(func =='div'):
                 r1 = instruction[10:13]
                 r2 = instruction[13:16]
                 v1=self.reg_in[r1]
@@ -52,19 +52,19 @@ class Decoder:
                 v1=self.reg_in[r1]
                 a.append(v1)
                 a.append(r2)    
-        elif(type=='D'):
+        elif(type =='D'):
             r1 = instruction[5:8]
             madd = instruction[8:16]
             madd =self.bintodec(madd)
             v1=self.reg_in[madd]
             a.append(r1)
             a.append(v1)
-        elif(type=='E'):
+        elif(type =='E'):
             madd = instruction[8:16]
             madd =self.bintodec(madd)
             v1=self.reg_in[madd]
             a.append(v1)
-        elif(type=='F'):    
+        elif(type =='F'):    
                 
         # func=self.isa_dict[opcode]
         type=self.isa_dict[opcode]
