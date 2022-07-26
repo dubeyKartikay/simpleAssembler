@@ -31,32 +31,40 @@ class Decoder:
             a.append(v1)
             a.append(v2)
             a.append(r3)
-        if(type=='B'):
+        elif(type=='B'):
             r1 = instruction[5:8]
             imm = instruction[8:16]
             imm =self.bintodec(imm)
             v1=self.reg_in[imm]
             a.append(r1)
             a.append(v1)
-        if(type=='C'):
-            if(func=)
-            r1 = instruction[10:13]
-            r2 = instruction[13:16]
-            v1=self.reg_in[r1]
-            a.append(v1)
-            a.append(r2)    
-        if(type=='D'):
+        elif(type=='C'):
+            if(func ='div'):
+                r1 = instruction[10:13]
+                r2 = instruction[13:16]
+                v1=self.reg_in[r1]
+                v2=self.reg_in[r2]
+                a.append(v1)
+                a.append(v2)
+            else:    
+                r1 = instruction[10:13]
+                r2 = instruction[13:16]
+                v1=self.reg_in[r1]
+                a.append(v1)
+                a.append(r2)    
+        elif(type=='D'):
             r1 = instruction[5:8]
             madd = instruction[8:16]
+            madd =self.bintodec(madd)
             v1=self.reg_in[madd]
             a.append(r1)
             a.append(v1)
-        if(type=='E'):
+        elif(type=='E'):
             madd = instruction[8:16]
-            v1=self.reg_in[imm]
+            madd =self.bintodec(madd)
+            v1=self.reg_in[madd]
             a.append(v1)
-        if(type=='F'):
-            a.append()    
+        elif(type=='F'):    
                 
         # func=self.isa_dict[opcode]
         type=self.isa_dict[opcode]
