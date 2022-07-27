@@ -1,6 +1,3 @@
-from ast import Return
-
-
 class Decoder:
     def __init__(self,isa_dict,unUsedBitsTable,isa_names,reg_in):
         self.isa_dict=isa_dict
