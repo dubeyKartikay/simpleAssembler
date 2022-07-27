@@ -1,18 +1,26 @@
 class SIM:
-    def __init__(self,arr,var_list,reg_in):
+    def __init__(self,reg_in,mem,arr=[]):
         self.arr=arr
         self.n=len(arr)
         self.halted=0
-        self.var_list=var_list
         self.reg_in=reg_in
-    def bintodec(self,bin):
-        n=len(bin)
-        sum=0
-        bin=bin[::-1]
+        self.mem = mem
+    def decodeNum(self,formatted_num):
+        n = len(formatted_num)
+        s = 0
+        formatted_num = formatted_num[::-1]
         for i in range(n):
-            bin[i]=int(bin[i])
-            sum=sum+(bin[i]*(2^n))
-        return sum
+
+            s += (int(formatted_num[i])*(2**i))
+        return s
+    def bin2dec(self,formatted_num):
+        n = len(formatted_num)
+        s = 0
+        formatted_num = formatted_num[::-1]
+        for i in range(n):
+
+            s += (int(formatted_num[i])*(2**i))
+        return s
     def dectobin(self,dec):
         j=""
         while dec>0:
@@ -28,15 +36,16 @@ class SIM:
         return result    
     def execute(self,PC):
         if(self.arr[0]=='add'):
-            a=self.bintodec(self.arr[1])
-            b=self.bintodec(self.arr[2])
+            a=self.arr[1]
+            b=self.arr[2]
             c=""
             c=self.dectobin(a+b)
             self.reg_in[self.arr[3]]=c    
             PC+=1
+            
         elif(self.arr[0]=='sub'):
-            a=self.bintodec(self.arr[1])
-            b=self.bintodec(self.arr[2])
+            a=self.arr[1]
+            b=self.arr[2]
             c=""
             c=self.dectobin(a-b)
             self.reg_in[self.arr[3]]=c 
@@ -45,36 +54,31 @@ class SIM:
             if(type(self.arr[2]==int)):
                 b=""
                 b=self.dectobin(self.arr[2])
-                self.reg_in[self.arr[2]]=b
+                self.reg_in[self.arr[1]]=b
                 PC+=1
-        elif(self.arr[0]=='mov'):
-            if(type(self.arr[2]!=int)):
-                b=self.bintodec(self.arr[1])
+            elif(type(self.arr[2]!=int)):
+                b=self.arr[1]
                 c=""
                 c=self.dectobin(b)
-                self.reg_in[self.arr[2]]=c   
+                self.reg_in[self.arr[1]]=c   
                 PC+=1 
-        elif(arr[0]=='ld'):                 #mem adress data do in binary
-            b=bintodec(self.arr[2])
-            c=""
-            c=self.dectobin(b)
-            self.reg_in[self.arr[1]]=c
+        elif(self.arr[0]=='ld'):                 #mem adress data do in binary
+            self.reg_in[self.arr[1]] = self.mem[self.bin2dec(self.arr[2])]
             PC+=1
-        elif(arr[0]=='st'):
-            val=self.reg_in[arr[1]]
-            #memory adress not initialized
+        elif(self.arr[0]=='st'):
+            self.mem[self.bin2dec(self.arr[2])]= self.reg_in[self.arr[1]]
             PC+=1
             
         elif(self.arr[0]=='mul'):
-            a=self.bintodec(self.arr[1])
-            b=self.bintodec(self.arr[2])
+            a=self.arr[1]
+            b=self.arr[2]
             c=""
             c=self.dectobin(a*b)
             self.reg_in[self.arr[3]]=c
             PC+=1
         elif(self.arr[0]=='div'):
-            a=self.bintodec(self.arr[1])
-            b=self.bintodec(self.arr[2])
+            a=self.arr[1]
+            b=self.arr[2]
             c=""
             d=""
             c=self.dectobin(a/b)
@@ -82,62 +86,69 @@ class SIM:
             self.reg_in['000']=c
             self.reg_in['001']=d
             PC+=1
-        elif(arr[0]=='rs'):         #imm in dec
+        elif(self.arr[0]=='rs'):         #imm in dec
             a=""
-            a=self.reg_in[arr[1]]
-            a=self.bintodec(a)         
-            b=arr[2]
+            a=self.reg_in[self.arr[1]]
+            a=self.decodeNum(a)         
+            b=self.arr[2]
             a=a>>b
             a=self.dectobin(a)
-            self.reg_in[arr[1]]=a
+            self.reg_in[self.arr[1]]=a
             PC+=1
-        elif(arr[0]=='ls'):          #imm in dec
+        elif(self.arr[0]=='ls'):          #imm in dec
             a=""
-            a=self.reg_in[arr[1]]
-            a=self.bintodec(a)         
-            b=arr[2]
+            a=self.reg_in[self.arr[1]]
+            a=self.decodeNum(a)         
+            b=self.arr[2]
             a=a<<b
             a=self.dectobin(a)
-            self.reg_in[arr[1]]=a
+            self.reg_in[self.arr[1]]=a
             PC+=1
         elif(self.arr[0]=='xor'):
-            a=self.bintodec(self.arr[1])
-            b=self.bintodec(self.arr[2])
+            a=self.arr[1]
+            b=self.arr[2]
             c=""
             c=self.dectobin(a^b)
             self.reg_in[self.arr[3]]=c 
             PC+=1
         elif(self.arr[0]=='or'):
-            a=self.bintodec(self.arr[1])
-            b=self.bintodec(self.arr[2])
+            a=self.arr[1]
+            b=self.arr[2]
             c=""
             c=self.dectobin(a|b)
             self.reg_in[self.arr[3]]=c 
             PC+=1
         elif(self.arr[0]=='and'):
-            a=self.bintodec(self.arr[1])
-            b=self.bintodec(self.arr[2])
+            a=self.arr[1]
+            b=self.arr[2]
             c=""
             c=self.dectobin(a&b)
             self.reg_in[self.arr[3]]=c 
             PC+=1  
         elif(self.arr[0]=='not'):
-            a=self.bintodec(self.arr[1])
+            a=self.arr[1]
             c=""
             c=self.dectobin(~a)
-            self.reg_in[self.arr[3]]=c
+            self.reg_in[self.arr[2]]=c
             PC+=1
         elif(self.arr[0]=='cmp'):
-            a=self.bintodec(self.arr[1])
-            b=self.bintodec(self.arr[2])
+            a=self.arr[1]
+            b=self.arr[2]
+            flags = self.reg_in['111'].split("")
             if(a>b):
-                self.reg_in['111'][14]='1'
+                flags[-3] = "0"
+                flags[-2] = "1"
+                flags[-1] = "0"
                 PC+=1
             elif(a<b):
-                self.reg_in['111'][13]='1' 
+                flags[-3] = "1"
+                flags[-2] = "0"
+                flags[-1] = "0"
                 PC+=1           
             elif(a==b):
-                self.reg_in['111'][15]='1'
+                flags[-3] = "0"
+                flags[-2] = "0"
+                flags[-1] = "1"
                 PC+=1
         elif(self.arr[0]=='jmp'):
             pcnew=int(self.arr[1])
@@ -150,15 +161,16 @@ class SIM:
                 PC=PC+1
         elif(self.arr[0]=='jgt'):
             pcnew=int(self.arr[1])
-            if(self.reg_in['111'][14]==1):
+            if(self.reg_in['111'][-2]=='1'):
                 PC=pcnew
             else:
                 PC=PC+1
         elif(self.arr[0]=='je'):
             pcnew=int(self.arr[1])
-            if(self.reg_in['111'][15]==1):
+            if(self.reg_in['111'][-1]=='1'):
                 PC=pcnew
             else:
                 PC=PC+1            
         elif(self.arr[0]=='hlt'):
-            self.halted=1                          
+            self.halted=1       
+        return PC                   

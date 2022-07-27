@@ -39,8 +39,8 @@ isa_names={
       "01101":"jgt",
       "01111":"je",
       "01010":"hlt",
-      "10010":"movi",
-      "10011":"movr"
+      "10010":"mov",
+      "10011":"mov"
 }
 unUsedBitsTable ={
       "A":2,
