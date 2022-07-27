@@ -82,8 +82,24 @@ class SIM:
             self.reg_in['000']=c
             self.reg_in['001']=d
             PC+=1
-        # elif(arr[0]=='rs'):
-        # elif(arr[0]=='ls'):
+        elif(arr[0]=='rs'):         #imm in dec
+            a=""
+            a=self.reg_in[arr[1]]
+            a=self.bintodec(a)         
+            b=arr[2]
+            a=a>>b
+            a=self.dectobin(a)
+            self.reg_in[arr[1]]=a
+            PC+=1
+        elif(arr[0]=='ls'):          #imm in dec
+            a=""
+            a=self.reg_in[arr[1]]
+            a=self.bintodec(a)         
+            b=arr[2]
+            a=a<<b
+            a=self.dectobin(a)
+            self.reg_in[arr[1]]=a
+            PC+=1
         elif(self.arr[0]=='xor'):
             a=self.bintodec(self.arr[1])
             b=self.bintodec(self.arr[2])
