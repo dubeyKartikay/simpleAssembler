@@ -1,10 +1,10 @@
 class SIM:
-    def __init__(self,arr,isa_dict,var_list):
+    def __init__(self,arr,var_list,reg_in):
         self.arr=arr
         self.n=len(arr)
-        self.isa_dict=isa_dict
         self.halted=0
         self.var_list=var_list
+        self.reg_in=reg_in
     def bintodec(self,bin):
         n=len(bin)
         sum=0
@@ -32,36 +32,45 @@ class SIM:
             b=self.bintodec(self.arr[2])
             c=""
             c=self.dectobin(a+b)
-            self.isa_dict[self.arr[3]]=c    
+            self.reg_in[self.arr[3]]=c    
             PC+=1
         elif(self.arr[0]=='sub'):
             a=self.bintodec(self.arr[1])
             b=self.bintodec(self.arr[2])
             c=""
             c=self.dectobin(a-b)
-            self.isa_dict[self.arr[3]]=c 
+            self.reg_in[self.arr[3]]=c 
             PC+=1
         elif(self.arr[0]=='mov'):                 
             if(type(self.arr[2]==int)):
                 b=""
                 b=self.dectobin(self.arr[2])
-                self.isa_dict[self.arr[2]]=b
+                self.reg_in[self.arr[2]]=b
                 PC+=1
         elif(self.arr[0]=='mov'):
             if(type(self.arr[2]!=int)):
                 b=self.bintodec(self.arr[1])
                 c=""
                 c=self.dectobin(b)
-                self.isa_dict[self.arr[2]]=c   
+                self.reg_in[self.arr[2]]=c   
                 PC+=1 
-        # elif(arr[0]=='ld'):
-        # elif(arr[0]=='st'):
+        elif(arr[0]=='ld'):                 #mem adress data do in binary
+            b=bintodec(self.arr[2])
+            c=""
+            c=self.dectobin(b)
+            self.reg_in[self.arr[1]]=c
+            PC+=1
+        elif(arr[0]=='st'):
+            val=self.reg_in[arr[1]]
+            #memory adress not initialized
+            PC+=1
+            
         elif(self.arr[0]=='mul'):
             a=self.bintodec(self.arr[1])
             b=self.bintodec(self.arr[2])
             c=""
             c=self.dectobin(a*b)
-            self.isa_dict[self.arr[3]]=c
+            self.reg_in[self.arr[3]]=c
             PC+=1
         elif(self.arr[0]=='div'):
             a=self.bintodec(self.arr[1])
@@ -70,8 +79,8 @@ class SIM:
             d=""
             c=self.dectobin(a/b)
             d=self.dectobin(a%b)
-            self.isa_dict['000']=c
-            self.isa_dict['001']=d
+            self.reg_in['000']=c
+            self.reg_in['001']=d
             PC+=1
         # elif(arr[0]=='rs'):
         # elif(arr[0]=='ls'):
@@ -80,58 +89,58 @@ class SIM:
             b=self.bintodec(self.arr[2])
             c=""
             c=self.dectobin(a^b)
-            self.isa_dict[self.arr[3]]=c 
+            self.reg_in[self.arr[3]]=c 
             PC+=1
         elif(self.arr[0]=='or'):
             a=self.bintodec(self.arr[1])
             b=self.bintodec(self.arr[2])
             c=""
             c=self.dectobin(a|b)
-            self.isa_dict[self.arr[3]]=c 
+            self.reg_in[self.arr[3]]=c 
             PC+=1
         elif(self.arr[0]=='and'):
             a=self.bintodec(self.arr[1])
             b=self.bintodec(self.arr[2])
             c=""
             c=self.dectobin(a&b)
-            self.isa_dict[self.arr[3]]=c 
+            self.reg_in[self.arr[3]]=c 
             PC+=1  
         elif(self.arr[0]=='not'):
             a=self.bintodec(self.arr[1])
             c=""
             c=self.dectobin(~a)
-            self.isa_dict[self.arr[3]]=c
+            self.reg_in[self.arr[3]]=c
             PC+=1
         elif(self.arr[0]=='cmp'):
             a=self.bintodec(self.arr[1])
             b=self.bintodec(self.arr[2])
             if(a>b):
-                self.isa_dict['111'][14]='1'
+                self.reg_in['111'][14]='1'
                 PC+=1
             elif(a<b):
-                self.isa_dict['111'][13]='1' 
+                self.reg_in['111'][13]='1' 
                 PC+=1           
             elif(a==b):
-                self.isa_dict['111'][15]='1'
+                self.reg_in['111'][15]='1'
                 PC+=1
         elif(self.arr[0]=='jmp'):
             pcnew=int(self.arr[1])
             PC=pcnew
         elif(self.arr[0]=='jlt'):
             pcnew=int(self.arr[1])
-            if(self.isa_dict['111'][13]==1):
+            if(self.reg_in['111'][13]==1):
                 PC=pcnew
             else:
                 PC=PC+1
         elif(self.arr[0]=='jgt'):
             pcnew=int(self.arr[1])
-            if(self.isa_dict['111'][14]==1):
+            if(self.reg_in['111'][14]==1):
                 PC=pcnew
             else:
                 PC=PC+1
         elif(self.arr[0]=='je'):
             pcnew=int(self.arr[1])
-            if(self.isa_dict['111'][15]==1):
+            if(self.reg_in['111'][15]==1):
                 PC=pcnew
             else:
                 PC=PC+1            
