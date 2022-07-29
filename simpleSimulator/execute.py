@@ -36,6 +36,7 @@ class SIM:
         return result    
     def execute(self,PC):
         if(self.arr[0]=='add'):
+            self.reg_in["111"] = "0000000000000000"
             a=self.arr[1]
             b=self.arr[2]
             c=""
@@ -44,6 +45,7 @@ class SIM:
             PC+=1
             
         elif(self.arr[0]=='sub'):
+            self.reg_in["111"] = "0000000000000000"
             a=self.arr[1]
             b=self.arr[2]
             c=""
@@ -63,13 +65,16 @@ class SIM:
                 self.reg_in[self.arr[1]]=c   
                 PC+=1 
         elif(self.arr[0]=='ld'):                 #mem adress data do in binary
+            self.reg_in["111"] = "0000000000000000"
             self.reg_in[self.arr[1]] = self.mem[self.bin2dec(self.arr[2])]
             PC+=1
         elif(self.arr[0]=='st'):
+            self.reg_in["111"] = "0000000000000000"
             self.mem[self.bin2dec(self.arr[2])]= self.reg_in[self.arr[1]]
             PC+=1
             
         elif(self.arr[0]=='mul'):
+            self.reg_in["111"] = "0000000000000000"
             a=self.arr[1]
             b=self.arr[2]
             c=""
@@ -87,6 +92,7 @@ class SIM:
             self.reg_in['001']=d
             PC+=1
         elif(self.arr[0]=='rs'):         #imm in dec
+            self.reg_in["111"] = "0000000000000000"
             a=""
             a=self.reg_in[self.arr[1]]
             a=self.decodeNum(a)         
@@ -96,6 +102,7 @@ class SIM:
             self.reg_in[self.arr[1]]=a
             PC+=1
         elif(self.arr[0]=='ls'):          #imm in dec
+            self.reg_in["111"] = "0000000000000000"
             a=""
             a=self.reg_in[self.arr[1]]
             a=self.decodeNum(a)         
@@ -105,6 +112,7 @@ class SIM:
             self.reg_in[self.arr[1]]=a
             PC+=1
         elif(self.arr[0]=='xor'):
+            self.reg_in["111"] = "0000000000000000"
             a=self.arr[1]
             b=self.arr[2]
             c=""
@@ -112,6 +120,7 @@ class SIM:
             self.reg_in[self.arr[3]]=c 
             PC+=1
         elif(self.arr[0]=='or'):
+            self.reg_in["111"] = "0000000000000000"
             a=self.arr[1]
             b=self.arr[2]
             c=""
@@ -119,6 +128,7 @@ class SIM:
             self.reg_in[self.arr[3]]=c 
             PC+=1
         elif(self.arr[0]=='and'):
+            self.reg_in["111"] = "0000000000000000"
             a=self.arr[1]
             b=self.arr[2]
             c=""
@@ -126,15 +136,18 @@ class SIM:
             self.reg_in[self.arr[3]]=c 
             PC+=1  
         elif(self.arr[0]=='not'):
+            self.reg_in["111"] = "0000000000000000"
             a=self.arr[1]
+            # print(a)
             c=""
             c=self.dectobin(~a)
             self.reg_in[self.arr[2]]=c
             PC+=1
         elif(self.arr[0]=='cmp'):
             a=self.arr[1]
-            b=self.arr[2]
-            flags = self.reg_in['111'].split("")
+            b=self.decodeNum(self.reg_in[self.arr[2]])
+            print(a,b,PC)
+            flags = list(self.reg_in['111'])
             if(a>b):
                 flags[-3] = "0"
                 flags[-2] = "1"
@@ -150,27 +163,34 @@ class SIM:
                 flags[-2] = "0"
                 flags[-1] = "1"
                 PC+=1
+            self.reg_in['111'] = "".join(flags)
         elif(self.arr[0]=='jmp'):
             pcnew=int(self.arr[1])
             PC=pcnew
+            self.reg_in["111"] = "0000000000000000"
         elif(self.arr[0]=='jlt'):
             pcnew=int(self.arr[1])
-            if(self.reg_in['111'][13]==1):
+            # print("HELE")
+            if(self.reg_in['111'][-3]=='1'):
                 PC=pcnew
             else:
                 PC=PC+1
+            self.reg_in["111"] = "0000000000000000"
         elif(self.arr[0]=='jgt'):
             pcnew=int(self.arr[1])
             if(self.reg_in['111'][-2]=='1'):
                 PC=pcnew
             else:
                 PC=PC+1
+            self.reg_in["111"] = "0000000000000000"
         elif(self.arr[0]=='je'):
             pcnew=int(self.arr[1])
             if(self.reg_in['111'][-1]=='1'):
                 PC=pcnew
             else:
                 PC=PC+1            
+            self.reg_in["111"] = "0000000000000000"
         elif(self.arr[0]=='hlt'):
+            self.reg_in["111"] = "0000000000000000"
             self.halted=1       
         return PC                   

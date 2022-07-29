@@ -54,7 +54,7 @@ class Decoder:
             else:
                 r1 = instruction[10:13]
                 r2 = instruction[13:16]
-                v1 = self.reg_in[r1]
+                v1 =  self.decodeNum(self.reg_in[r1])
                 a.append(v1)
                 a.append(r2)
         elif(type == 'D'):

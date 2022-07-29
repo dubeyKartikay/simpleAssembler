@@ -26,6 +26,7 @@ pc = 0
 i=0
 while (ex.halted == 0):
     ex.arr = dec.decode(Mem[pc])
+    print(dec.decode(Mem[pc]))
     pc = ex.execute(pc)
     simDicts.reg_in = ex.reg_in
     dumpMem(i)
