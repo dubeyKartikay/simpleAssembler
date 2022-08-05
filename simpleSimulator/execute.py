@@ -53,6 +53,7 @@ class SIM:
             self.reg_in[self.arr[3]]=c 
             PC+=1
         elif(self.arr[0]=='mov'):                 
+            self.reg_in["111"] = "0000000000000000"
             if(type(self.arr[2]==int)):
                 b=""
                 b=self.dectobin(self.arr[2])
@@ -82,6 +83,7 @@ class SIM:
             self.reg_in[self.arr[3]]=c
             PC+=1
         elif(self.arr[0]=='div'):
+            self.reg_in["111"] = "0000000000000000"
             a=self.arr[1]
             b=self.arr[2]
             c=""
@@ -146,7 +148,7 @@ class SIM:
         elif(self.arr[0]=='cmp'):
             a=self.arr[1]
             b=self.decodeNum(self.reg_in[self.arr[2]])
-            print(a,b,PC)
+            # print(a,b,PC)
             flags = list(self.reg_in['111'])
             if(a>b):
                 flags[-3] = "0"

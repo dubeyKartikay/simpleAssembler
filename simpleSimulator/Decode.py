@@ -52,11 +52,16 @@ class Decoder:
                 a.append(v1)
                 a.append(v2)
             else:
+                
                 r1 = instruction[10:13]
                 r2 = instruction[13:16]
                 v1 =  self.decodeNum(self.reg_in[r1])
-                a.append(v1)
-                a.append(r2)
+                if func == "mov":
+                    a.append(r2)
+                    a.append(v1)
+                else:
+                    a.append(v1)
+                    a.append(r2)
         elif(type == 'D'):
 
             r1 = instruction[5:8]
