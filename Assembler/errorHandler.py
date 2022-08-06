@@ -132,7 +132,7 @@ class ErrorHandler:
                         errorcode=1
                         line_number=line[-1]
                         return self.handle(errorcode,line_number)    
-            elif((a=='movf' and line[2][0]=="$")):
+            elif((a=='movf')):
                     b=line[1]
                     c=line[2]
                     c=c[1::]
@@ -148,7 +148,11 @@ class ErrorHandler:
                     elif(b not in asm.Reg_Adress.keys() and b!='FLAGS'):
                         errorcode=1
                         line_number=line[-1]
-                        return self.handle(errorcode,line_number)             
+                        return self.handle(errorcode,line_number)     
+                    elif(line[2][0]!="$"):
+                        errorcode=11
+                        line_number=line[-1]
+                        return self.handle(errorcode,line_number)        
             if(a=='hlt'):
                     if(len(line)!=2):
                         errorcode=11
