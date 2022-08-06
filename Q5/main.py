@@ -55,11 +55,10 @@ else:
         flag=0
         if(otpt<0):
             flag=1
-        print(otpt)
         if flag==1:
-            print(abs(otpt)," bits saved")
+            print(abs(otpt)," pins saved")
         elif flag==0:
-            print(abs(otpt)," bits required")
+            print(abs(otpt)," pins required")
     elif x==2:
         cpu_bit = int(input("how many bits the cpu is : "))
         pins= int(input("Enter adress pins : "))
