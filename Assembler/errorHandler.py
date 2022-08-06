@@ -136,6 +136,7 @@ class ErrorHandler:
                     b=line[1]
                     c=line[2]
                     c=c[1::]
+                    c=float(c)
                     d=FtoI.final(c)
                     if(len(line)!=4):
                         errorcode=11
