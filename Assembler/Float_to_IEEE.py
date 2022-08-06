@@ -23,12 +23,16 @@ def float2bin(float):
     j=str(j)
     return j
 def final(n):
+    flag=0
     exp_final=""
     mantissa_final=""
     int_part=int(n)
     float_part=n-int_part
     bias=0
-    float_bin=float2bin(float_part)
+    if(float_part==0):
+        float_bin='0'
+    else:
+        float_bin=float2bin(float_part)
     int_bin=dectobin(int_part)
     n=0
     for i in range(len(int_bin)):
@@ -36,16 +40,21 @@ def final(n):
             break
         n+=1
     int_bin1=int_bin[n:len(int_bin)+1]
-    float_extra=int_bin[1:len(int_bin)+1]
+    float_extra=int_bin[1:len(int_bin1)+1]
     exp=len(int_bin1)-1
     exp_dec=bias+exp
     exp_bin=dectobin(exp_dec)
     mantissa=float_extra+float_bin
     exp_final+="0"*(3-len(exp_bin))
     exp_final+=exp_bin
+    if(len(exp_final)>3):
+        flag=1
     mantissa_final=mantissa+"0"*(5-len(mantissa))
+    mantissa_final=mantissa_final.rstrip('0')
+    if(len(mantissa_final)>5):
+        flag=1
     finalotpt=exp_final+mantissa_final
-    return finalotpt
+    return finalotpt,flag
 
 
 print(final(252))
