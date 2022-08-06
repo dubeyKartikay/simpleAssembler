@@ -3,6 +3,7 @@ from Decode import Decoder
 from execute import SIM
 import simDicts
 from utils import getBin8Bits,final
+from plot_graph import plot_graph
 Mem= [0]*256
 i = 0 
 for line in stdin:
@@ -62,20 +63,19 @@ def dumpMem(i):
 dec = Decoder(simDicts.isa_dict,simDicts.unUsedBitsTable,simDicts.isa_names,simDicts.reg_in)
 ex =SIM(simDicts.reg_in,Mem)
 pc = 0
-i=0
-cycleN = []
-memAddr = []
+i = 0
 while (ex.halted == 0):
-    memAddr.append(pc)
     print(getBin8Bits(pc,1),end= " ")
+    ex.mem_addr.append(pc)
     ex.arr = dec.decode(Mem[pc])
+    ex.cycle.append(i)
     # print(dec.decode(Mem[pc]))
     pc = ex.execute(pc)
     dumpreg(i)
     simDicts.reg_in = ex.reg_in
     print()
     i+=1
-    cycleN.append(i)
+
     # inp = input()
 dumpMem(i)
-    
+plot_graph(ex.cycle,ex.mem_addr)
