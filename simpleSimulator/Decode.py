@@ -64,7 +64,7 @@ class Decoder:
                 a.append(v1)
                 a.append(r2)
             else:
-                
+        
                 r1 = instruction[10:13]
                 r2 = instruction[13:16]
                 v1 =  self.reg_in[r1]
