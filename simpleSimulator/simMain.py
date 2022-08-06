@@ -27,10 +27,10 @@ for line in stdin:
         result+=j
         return result[-16:]
 def encodeNum(num):
-    if num == int(num):
+    if type(num) == int:
         return dectobin(num)
     else:
-        return final(num)
+        return final(num)[0]
 def dumpreg(i):
     # with open(f"regdump{i}","w") as file:
     #     for m,v in simDicts.reg_in.items():
@@ -40,7 +40,11 @@ def dumpreg(i):
     for m,v in simDicts.reg_in.items():
             if m == None:
                 continue
-            print(v,end=" ")
+            k = encodeNum(v)
+            if len(k) == 8:
+                print("0"*8 + k,end=" ")
+            else:
+                print(k,end=" ")
 def dumpMem(i):
     # with open(f"memdump{i}","w") as file:
     for m in Mem:
@@ -50,12 +54,19 @@ def dumpMem(i):
         if type(m) == str:
             print(m)
             continue
-        print(m)
+        k = encodeNum(m)
+        if len(k) == 8:
+            print("0"*8 + k)
+        else:
+            print(k)
 dec = Decoder(simDicts.isa_dict,simDicts.unUsedBitsTable,simDicts.isa_names,simDicts.reg_in)
 ex =SIM(simDicts.reg_in,Mem)
 pc = 0
 i=0
+cycleN = []
+memAddr = []
 while (ex.halted == 0):
+    memAddr.append(pc)
     print(getBin8Bits(pc,1),end= " ")
     ex.arr = dec.decode(Mem[pc])
     # print(dec.decode(Mem[pc]))
@@ -64,6 +75,7 @@ while (ex.halted == 0):
     simDicts.reg_in = ex.reg_in
     print()
     i+=1
+    cycleN.append(i)
     # inp = input()
 dumpMem(i)
     

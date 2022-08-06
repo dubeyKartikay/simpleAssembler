@@ -60,7 +60,7 @@ class Assembler:
                     continue
                 elif "$" in ins:
                     if line[0][-1] == 'f':
-                        binary+=final(float(ins.split("$")[1]))
+                        binary+=final(float(ins.split("$")[1]))[0]
                     else:
                         binary+= getBin8Bits(int(ins.split("$")[1]),"imm")
                 elif  ins in self.labesTable.keys():
