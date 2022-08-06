@@ -30,6 +30,8 @@ class ErrorHandler:
             sys.stdout.write("multiple halts used\n")
         if(errorCode==11):
             sys.stdout.write("General Syntax Error at line number" + " " +str(lineNumber) + "\n")
+        if(errorCode==12):
+            sys.stdout.write("Immediate value of of range" + " " +str(lineNumber) + "\n")
         return -1
 
     def errorCheck(self,line):
@@ -117,6 +119,29 @@ class ErrorHandler:
                         errorcode=5
                         line_number=line[-1]
                         return self.handle(errorcode,line_number)
+            elif(a=='addf' or a=='subf'):
+                    b=line[1]
+                    c=line[2]
+                    d=line[3]
+                    if(len(line)!=5):
+                        errorcode=11
+                        line_number=line[-1]
+                        return self.handle(errorcode,line_number)      
+                    elif((c not in asm.Reg_Adress.keys() and c!='FLAGS') or (d not in asm.Reg_Adress.keys() and d!='FLAGS') or (b not in asm.Reg_Adress.keys() and b!='FLAGS')):
+                        errorcode=1
+                        line_number=line[-1]
+                        return self.handle(errorcode,line_number)    
+            elif((a=='movf' and line[2][0]!="$")):
+                    b=line[1]
+                    c=line[2]
+                    if(len(line)!=4):
+                        errorcode=11
+                        line_number=line[-1]
+                        return self.handle(errorcode,line_number)
+                    elif((c not in asm.Reg_Adress.keys() and c!='FLAGS') or (b not in asm.Reg_Adress.keys() and b!='FLAGS')):
+                        errorcode=1
+                        line_number=line[-1]
+                        return self.handle(errorcode,line_number)              
             if(a=='hlt'):
                     if(len(line)!=2):
                         errorcode=11
