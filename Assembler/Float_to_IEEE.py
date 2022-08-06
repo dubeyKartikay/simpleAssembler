@@ -56,5 +56,3 @@ def final(n):
     finalotpt=exp_final+mantissa_final
     return finalotpt,flag
 
-
-print(final(5))

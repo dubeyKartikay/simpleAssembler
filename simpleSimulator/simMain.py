@@ -40,7 +40,7 @@ def dumpreg(i):
     for m,v in simDicts.reg_in.items():
             if m == None:
                 continue
-            print(encodeNum(v),end=" ")
+            print(v,end=" ")
 def dumpMem(i):
     # with open(f"memdump{i}","w") as file:
     for m in Mem:
@@ -50,7 +50,7 @@ def dumpMem(i):
         if type(m) == str:
             print(m)
             continue
-        print(encodeNum(m))
+        print(m)
 dec = Decoder(simDicts.isa_dict,simDicts.unUsedBitsTable,simDicts.isa_names,simDicts.reg_in)
 ex =SIM(simDicts.reg_in,Mem)
 pc = 0
@@ -64,6 +64,6 @@ while (ex.halted == 0):
     simDicts.reg_in = ex.reg_in
     print()
     i+=1
-     
+    # inp = input()
 dumpMem(i)
     

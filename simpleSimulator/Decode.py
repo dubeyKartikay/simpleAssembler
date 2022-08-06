@@ -63,7 +63,7 @@ class Decoder:
                 r1 = instruction[10:13]
                 r2 = instruction[13:16]
                 v1 =  self.reg_in[r1]
-                if func == "mov":
+                if func == "mov"  or func == "movf":
                     a.append(r2)
                     a.append(v1)
                 else:
