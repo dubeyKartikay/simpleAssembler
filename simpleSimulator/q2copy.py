@@ -64,17 +64,7 @@ dec = Decoder(simDicts.isa_dict,simDicts.unUsedBitsTable,simDicts.isa_names,simD
 ex =SIM(simDicts.reg_in,Mem)
 pc = 0
 i = 0
-while (ex.halted == 0):
-    print(getBin8Bits(pc,1),end= " ")
-    ex.mem_addr.append(pc)
-    ex.arr = dec.decode(Mem[pc])
-    ex.cycle.append(i)
-    # print(dec.decode(Mem[pc]))
-    pc = ex.execute(pc)
-    dumpreg(i)
-    simDicts.reg_in = ex.reg_in
-    print()
-    i+=1
+
 
     # inp = input()
 dumpMem(i)
