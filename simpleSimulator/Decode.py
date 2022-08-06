@@ -32,8 +32,8 @@ class Decoder:
             r1 = instruction[7:10]
             r2 = instruction[10:13]
             r3 = instruction[13:16]
-            v1 = self.decodeNum(self.reg_in[r1])
-            v2 = self.decodeNum(self.reg_in[r2])
+            v1 = self.reg_in[r1]
+            v2 = self.reg_in[r2]
             a.append(v1)
             a.append(v2)
             a.append(r3)
@@ -47,22 +47,22 @@ class Decoder:
             if(func == 'div'):
                 r1 = instruction[10:13]
                 r2 = instruction[13:16]
-                v1 =  self.decodeNum(self.reg_in[r1])
-                v2 =  self.decodeNum(self.reg_in[r2])
+                v1 =  self.reg_in[r1]
+                v2 =  self.reg_in[r2]
                 a.append(v1)
                 a.append(v2)
             elif (func== 'not'):
                 r1 = instruction[10:13]
                 r2 = instruction[13:16]
-                v1 =  self.decodeNum(self.reg_in[r1])
-                v2 =  self.decodeNum(self.reg_in[r2])
+                v1 =  self.reg_in[r1]
+                v2 =  self.reg_in[r2]
                 a.append(v1)
                 a.append(r2)
             else:
                 
                 r1 = instruction[10:13]
                 r2 = instruction[13:16]
-                v1 =  self.decodeNum(self.reg_in[r1])
+                v1 =  self.reg_in[r1]
                 if func == "mov":
                     a.append(r2)
                     a.append(v1)
