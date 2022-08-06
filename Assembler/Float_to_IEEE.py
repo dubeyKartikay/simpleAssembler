@@ -48,4 +48,4 @@ def final(n):
     return finalotpt
 
 
-print(final(31.5))
+print(final(252))

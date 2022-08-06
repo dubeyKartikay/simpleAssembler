@@ -2,8 +2,8 @@ from sys import stdin
 from Decode import Decoder
 from execute import SIM
 import simDicts
-from utils import getBin8Bits
-Mem= ["0"*16]*256
+from utils import getBin8Bits,final
+Mem= [0]*256
 i = 0 
 for line in stdin:
     if i > 255:
@@ -13,7 +13,24 @@ for line in stdin:
         continue
     Mem[i] = line.strip()
     i+=1
-
+    def dectobin(dec):
+        j=""
+        while dec>0:
+            k=dec%2
+            dec=dec//2
+            k=str(k)
+            j=j+k
+        j=j[::-1]
+        j=str(j)
+        result=""
+        result+="0"*(16-len(j))
+        result+=j
+        return result[-16:]
+def encodeNum(num):
+    if num == int(num):
+        return dectobin(num)
+    else:
+        return final(num)
 def dumpreg(i):
     # with open(f"regdump{i}","w") as file:
     #     for m,v in simDicts.reg_in.items():
@@ -23,14 +40,17 @@ def dumpreg(i):
     for m,v in simDicts.reg_in.items():
             if m == None:
                 continue
-            print(v,end=" ")
+            print(encodeNum(v),end=" ")
 def dumpMem(i):
     # with open(f"memdump{i}","w") as file:
     for m in Mem:
         if m == None:
             print("0"*16)
             continue
-        print(m)
+        if type(m) == str:
+            print(m)
+            continue
+        print(encodeNum(m))
 dec = Decoder(simDicts.isa_dict,simDicts.unUsedBitsTable,simDicts.isa_names,simDicts.reg_in)
 ex =SIM(simDicts.reg_in,Mem)
 pc = 0
