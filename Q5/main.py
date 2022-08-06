@@ -42,7 +42,7 @@ else:
     x=int(input("Enter the Sub-Type (1/2) : "))
     if x==1:
         cpu_bit = int(input("How many bits the cpu is : "))
-        new_type_addresable = input("Input new addressable memory type : ")
+        new_type_addresable = input("Input the New addressable memory type : ")
         d['Word']=cpu_bit
         if(y=='kWord' or y=='mWord'):
             space_mem=space_mem*cpu_bit
@@ -60,8 +60,8 @@ else:
         elif flag==0:
             print(abs(otpt),"Pins required")
     elif x==2:
-        cpu_bit = int(input("How many bits the cpu is : "))
-        pins= int(input("Enter adress pins : "))
+        cpu_bit = int(input("How many bits is the CPU ? : "))
+        pins= int(input("Enter the address pins : "))
         new_type_addresable = input("Input new addressable memory type : ")
         if(new_type_addresable=='Word'):
             d['Word']=cpu_bit
