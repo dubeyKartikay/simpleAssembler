@@ -29,6 +29,3 @@ def get_raw_file (filename,asm):
     #    asm.errorHandler.errorState = 1 
 #    
     return lines
-    
-    
-            

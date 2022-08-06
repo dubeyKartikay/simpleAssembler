@@ -1,5 +1,6 @@
 import sys
 import asm as asm
+import Float_to_IEEE as FtoI
 class ErrorHandler:
     def __init__(self,varlist = None,label_list= None):
         self.varlist=varlist
@@ -134,14 +135,20 @@ class ErrorHandler:
             elif((a=='movf' and line[2][0]!="$")):
                     b=line[1]
                     c=line[2]
+                    c=c[1::]
+                    d=FtoI.final(c)
                     if(len(line)!=4):
                         errorcode=11
+                        line_number=line[-1]
+                        return self.handle(errorcode,line_number)
+                    if(len(d)!=8):
+                        errorcode=12
                         line_number=line[-1]
                         return self.handle(errorcode,line_number)
                     elif(b not in asm.Reg_Adress.keys() and b!='FLAGS'):
                         errorcode=1
                         line_number=line[-1]
-                        return self.handle(errorcode,line_number)              
+                        return self.handle(errorcode,line_number)             
             if(a=='hlt'):
                     if(len(line)!=2):
                         errorcode=11
