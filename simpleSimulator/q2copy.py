@@ -33,11 +33,7 @@ def encodeNum(num):
     else:
         return final(num)[0]
 def dumpreg(i):
-    # with open(f"regdump{i}","w") as file:
-    #     for m,v in simDicts.reg_in.items():
-    #         if m == None:
-    #             continue
-    #         file.write(f"{m} : {v}\n")
+    
     for m,v in simDicts.reg_in.items():
             if m == None:
                 continue
@@ -47,7 +43,6 @@ def dumpreg(i):
             else:
                 print(k,end=" ")
 def dumpMem(i):
-    # with open(f"memdump{i}","w") as file:
     for m in Mem:
         if m == None:
             print("0"*16)
@@ -64,8 +59,14 @@ dec = Decoder(simDicts.isa_dict,simDicts.unUsedBitsTable,simDicts.isa_names,simD
 ex =SIM(simDicts.reg_in,Mem)
 pc = 0
 i = 0
-
-
-    # inp = input()
+while (ex.halted == 0):
+    print(getBin8Bits(pc,1),end= " ")
+    ex.mem_addr.append(pc)
+    ex.arr = dec.decode(Mem[pc])
+    ex.cycle.append(i)
+    dumpreg(i)
+    simDicts.reg_in = ex.reg_in
+    print()
+    i+=1
 dumpMem(i)
 plot_graph(ex.cycle,ex.mem_addr)
