@@ -1,7 +1,5 @@
 import matplotlib.pyplot as plt
 import math as m
-import q2copy
-cycleN,memAddress=q2copy.sim()
 
 def plot_graph(cycleN,memAddress):
     
