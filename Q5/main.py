@@ -27,7 +27,7 @@ d = {
 mem_slots = space_mem/d[type_addresable]
 bits_required = log2(mem_slots)
 query_type = int(input("Input the type of question (1/2) : "))
-if query_type == 0:
+if query_type == 1:
     lenofins = int(input("Input the length of 1 instruction : "))
     lenofreg = int(input("Input the length of registers : "))
     print("Bits required to represent an address is : ",bits_required)
