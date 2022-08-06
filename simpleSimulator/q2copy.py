@@ -53,9 +53,12 @@ def dumpMem(i):
         print(encodeNum(m))
 dec = Decoder(simDicts.isa_dict,simDicts.unUsedBitsTable,simDicts.isa_names,simDicts.reg_in)
 ex =SIM(simDicts.reg_in,Mem)
-pc = 0
-i=0
+pc = 0 #program counter
+i=0 #clock cycle
+memAddress = []
+cycleCount = []
 while (ex.halted == 0):
+    memAddress.append(pc)
     print(getBin8Bits(pc,1),end= " ")
     ex.arr = dec.decode(Mem[pc])
     # print(dec.decode(Mem[pc]))
@@ -64,5 +67,6 @@ while (ex.halted == 0):
     simDicts.reg_in = ex.reg_in
     print()
     i+=1
+    cycleCount.append(i)
      
 dumpMem(i)
