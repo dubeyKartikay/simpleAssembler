@@ -5,7 +5,7 @@ memAdd=[]
 def plot_graph(cycleN,memAdd):
     
     print("\n")
-    plt.scatter(cycleN, memAdd, color='black')
+    plt.scatter(cycleN, memAdd, color='blue')
     plt.title('Scatter Plot Graph', fontsize=20)
     plt.xlabel('Cycle Number', fontsize=20)
     plt.ylabel('Memory Adress', fontsize=20)
