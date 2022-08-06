@@ -23,5 +23,4 @@ def final(inp):
     float_part=num[power:len(num)]    
     float_part=bin2float(float_part)
     result=int_part+float_part
-    print(result)
-final('11111111')
+    
