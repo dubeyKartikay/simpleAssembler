@@ -26,7 +26,7 @@ d = {
 }
 mem_slots = space_mem/d[type_addresable]
 bits_required = log2(mem_slots)
-query_type = int(input("Input the type of question (1/2) : "))
+query_type = int(input("""Input the type of question (1/2)\n1. ISA TYPE\n2. Enhancement Type"""))
 if query_type == 1:
     lenofins = int(input("Input the length of 1 instruction : "))
     lenofreg = int(input("Input the length of registers : "))
