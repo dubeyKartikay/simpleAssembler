@@ -3,10 +3,13 @@ from Decode import Decoder
 from execute import SIM
 import simDicts
 from utils import getBin8Bits
-Mem= [None]*256
+Mem= ["0"*16]*256
 i = 0 
 for line in stdin:
     if i > 255:
+        continue
+    if line.strip() == '':
+        i+=1    
         continue
     Mem[i] = line.strip()
     i+=1
@@ -37,8 +40,8 @@ while (ex.halted == 0):
     ex.arr = dec.decode(Mem[pc])
     # print(dec.decode(Mem[pc]))
     pc = ex.execute(pc)
-    simDicts.reg_in = ex.reg_in
     dumpreg(i)
+    simDicts.reg_in = ex.reg_in
     print()
     i+=1
      

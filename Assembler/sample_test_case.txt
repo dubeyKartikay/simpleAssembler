@@ -1,4 +1,6 @@
 var xyz
 add R0 R1 R2
-add R0 $100
+movf R2 $1.5
+addf R3 R2 R1
+subf R3 R2 R1
 hlt
