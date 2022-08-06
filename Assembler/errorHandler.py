@@ -138,7 +138,7 @@ class ErrorHandler:
                         errorcode=11
                         line_number=line[-1]
                         return self.handle(errorcode,line_number)
-                    elif((c not in asm.Reg_Adress.keys() and c!='FLAGS') or (b not in asm.Reg_Adress.keys() and b!='FLAGS')):
+                    elif(b not in asm.Reg_Adress.keys() and b!='FLAGS'):
                         errorcode=1
                         line_number=line[-1]
                         return self.handle(errorcode,line_number)              
