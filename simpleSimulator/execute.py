@@ -6,6 +6,8 @@ class SIM:
         self.halted=0
         self.reg_in=reg_in
         self.mem = mem
+        self.mem_addr = []
+        self.cycle = []
     def decodeNum(self,formatted_num):
         n = len(formatted_num)
         s = 0
@@ -111,10 +113,14 @@ class SIM:
             PC+=1
         elif(self.arr[0]=='ld'):                 #mem adress data do in binary
             self.reg_in["111"] = 0
+            self.cycle.append(self.cycle[-1])
+            self.mem_addr.append(self.bin2dec(self.arr[2]))
             self.reg_in[self.arr[1]] = self.mem[self.bin2dec(self.arr[2])]
             PC+=1
         elif(self.arr[0]=='st'):
-            self.reg_in["111"] = 0 
+            self.reg_in["111"] = 0
+            self.cycle.append(self.cycle[-1])
+            self.mem_addr.append(self.bin2dec(self.arr[2]))
             self.mem[self.bin2dec(self.arr[2])]=self.reg_in[self.arr[1]]
             PC+=1
             
@@ -230,6 +236,6 @@ class SIM:
                 PC=PC+1            
             self.reg_in["111"] = 0
         elif(self.arr[0]=='hlt'):
-            self.reg_in["111"] = 0
+            # self.reg_in["111"] = 0
             self.halted=1       
         return PC                   
