@@ -45,7 +45,7 @@ def final(n):
     exp_final+=exp_bin
     mantissa_final=mantissa+"0"*(5-len(mantissa))
     finalotpt=exp_final+mantissa_final
-    print(finalotpt)
+    return finalotpt
 
 
-final(31.5)
+print(final(31.5))
