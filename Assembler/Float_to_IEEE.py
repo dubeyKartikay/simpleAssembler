@@ -49,12 +49,12 @@ def final(n):
     exp_final+=exp_bin
     if(len(exp_final)>3):
         flag=1
-    mantissa_final=mantissa+"0"*(5-len(mantissa))
     mantissa_final=mantissa_final.rstrip('0')
+    mantissa_final=mantissa+"0"*(5-len(mantissa))
     if(len(mantissa_final)>5):
         flag=1
     finalotpt=exp_final+mantissa_final
     return finalotpt,flag
 
 
-print(final(252))
+print(final(5))
