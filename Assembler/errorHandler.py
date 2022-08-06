@@ -132,7 +132,7 @@ class ErrorHandler:
                         errorcode=1
                         line_number=line[-1]
                         return self.handle(errorcode,line_number)    
-            elif((a=='movf' and line[2][0]!="$")):
+            elif((a=='movf' and line[2][0]=="$")):
                     b=line[1]
                     c=line[2]
                     c=c[1::]
