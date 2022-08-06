@@ -51,6 +51,13 @@ class Decoder:
                 v2 =  self.decodeNum(self.reg_in[r2])
                 a.append(v1)
                 a.append(v2)
+            elif (func== 'not'):
+                r1 = instruction[10:13]
+                r2 = instruction[13:16]
+                v1 =  self.decodeNum(self.reg_in[r1])
+                v2 =  self.decodeNum(self.reg_in[r2])
+                a.append(v1)
+                a.append(r2)
             else:
                 
                 r1 = instruction[10:13]

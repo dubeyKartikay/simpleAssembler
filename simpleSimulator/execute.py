@@ -33,13 +33,16 @@ class SIM:
         result=""
         result+="0"*(16-len(j))
         result+=j
-        return result    
+        return result[-16:]
     def execute(self,PC):
         if(self.arr[0]=='add'):
             self.reg_in["111"] = "0000000000000000"
             a=self.arr[1]
             b=self.arr[2]
             c=""
+            if a + b > 65535:
+                self.reg_in["111"] = "0000000000001000"
+                
             c=self.dectobin(a+b)
             self.reg_in[self.arr[3]]=c    
             PC+=1
@@ -48,6 +51,8 @@ class SIM:
             self.reg_in["111"] = "0000000000000000"
             a=self.arr[1]
             b=self.arr[2]
+            if a - b < 0:
+                self.reg_in["111"] = "0000000000001000"
             c=""
             c=self.dectobin(a-b)
             self.reg_in[self.arr[3]]=c 
@@ -79,6 +84,8 @@ class SIM:
             a=self.arr[1]
             b=self.arr[2]
             c=""
+            if a*b > 65535:
+                self.reg_in["111"] = "0000000000001000"
             c=self.dectobin(a*b)
             self.reg_in[self.arr[3]]=c
             PC+=1
@@ -88,7 +95,7 @@ class SIM:
             b=self.arr[2]
             c=""
             d=""
-            c=self.dectobin(a/b)
+            c=self.dectobin(a//b)
             d=self.dectobin(a%b)
             self.reg_in['000']=c
             self.reg_in['001']=d
@@ -141,15 +148,14 @@ class SIM:
             self.reg_in["111"] = "0000000000000000"
             a=self.arr[1]
             # print(a)
-            c=""
-            c=self.dectobin(~a)
+            c="".join(["1" if i == "0" else "0" for i in self.dectobin(a)])
             self.reg_in[self.arr[2]]=c
             PC+=1
         elif(self.arr[0]=='cmp'):
             a=self.arr[1]
             b=self.decodeNum(self.reg_in[self.arr[2]])
             # print(a,b,PC)
-            flags = list(self.reg_in['111'])
+            flags = list("0"*16)
             if(a>b):
                 flags[-3] = "0"
                 flags[-2] = "1"
