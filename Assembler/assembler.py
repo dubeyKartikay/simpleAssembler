@@ -1,5 +1,6 @@
 
 from utils import getBin8Bits
+from Float_to_IEEE import final
 from errorHandler import ErrorHandler
 class Assembler:
     def __init__(self,regAddr,instructionTypeDict,unusedBitsDict):
@@ -57,8 +58,11 @@ class Assembler:
                 if ins in self.regAddrTable.keys():
                     binary = binary + self.regAddrTable[ins]
                     continue
-                elif "$" in ins:  
-                    binary+= getBin8Bits(int(ins.split("$")[1]),"imm")
+                elif "$" in ins:
+                    if line[0][-1] == 'f':
+                        binary+=final(float(ins.split("$")[1]))
+                    else:
+                        binary+= getBin8Bits(int(ins.split("$")[1]),"imm")
                 elif  ins in self.labesTable.keys():
                     binary+= getBin8Bits(self.labesTable[ins],"mem")
                 elif ins in self.variableTable.keys():
