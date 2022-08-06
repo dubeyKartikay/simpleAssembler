@@ -2,7 +2,6 @@ def getBin8Bits(x,type):
     binaryint = format(x, 'b')
     ac_bin_int = binaryint.zfill(8)
     return ac_bin_int
-
 def dectobin(dec):
     j=""
     while dec>0:
@@ -51,4 +50,3 @@ def final(n):
     mantissa_final=mantissa+"0"*(5-len(mantissa))
     finalotpt=exp_final+mantissa_final
     return finalotpt
-
