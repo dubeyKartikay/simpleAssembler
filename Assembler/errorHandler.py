@@ -137,12 +137,12 @@ class ErrorHandler:
                     c=line[2]
                     c=c[1::]
                     c=float(c)
-                    d=FtoI.final(c)
+                    d,f=FtoI.final(c)
                     if(len(line)!=4):
                         errorcode=11
                         line_number=line[-1]
                         return self.handle(errorcode,line_number)
-                    if(len(d)!=8):
+                    if(f==1):
                         errorcode=12
                         line_number=line[-1]
                         return self.handle(errorcode,line_number)

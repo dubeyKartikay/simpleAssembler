@@ -1,3 +1,4 @@
+from utils import final
 class SIM:
     def __init__(self,reg_in,mem,arr=[]):
         self.arr=arr
@@ -53,9 +54,17 @@ class SIM:
             self.reg_in["111"] = 0
             a=self.arr[1]
             b=self.arr[2]
+            if type(a) == int:
+                a =self.dectobin(a)[-16:]
+                a = self.bin2dec(a)
+            if type(b) == int:
+                b =self.dectobin(b)[-16:]
+                b = self.bin2dec(b)
             c=""
-            if a + b > 252:
+            c,f = final(a + b)
+            if f==1:
                 self.reg_in["111"] = 8
+                self.reg_in[self.arr[3]]= float(252)   
                 return PC + 1
                 
             c=a+b
@@ -78,12 +87,20 @@ class SIM:
             self.reg_in["111"] = 0
             a=self.arr[1]
             b=self.arr[2]
+            if type(a) == int:
+                a =self.dectobin(a)[-16:]
+                a = self.bin2dec(a)
+            if type(b) == int:
+                b =self.dectobin(b)[-16:]
+                b = self.bin2dec(b)
             c=""
             if a - b < 0 :
                 self.reg_in["111"] = 8
+                c = float(1)
+                self.reg_in[self.arr[3]]=c    
                 return PC + 1
                 
-            c=a+b
+            c=a-b
             self.reg_in[self.arr[3]]=c    
             PC+=1
         elif(self.arr[0]=='mov' or self.arr[0]=='movf' ):                 

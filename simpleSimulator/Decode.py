@@ -1,3 +1,4 @@
+import IEEE_TO_FLOAT
 class Decoder:
     def __init__(self, isa_dict, unUsedBitsTable, isa_names, reg_in):
         self.isa_dict = isa_dict
@@ -40,7 +41,11 @@ class Decoder:
         elif(type == 'B'):
             r1 = instruction[5:8]
             imm = instruction[8:16]
-            imm = self.decodeNum(imm)
+            if func == "movf":
+                # print(imm)
+                imm = IEEE_TO_FLOAT.final(imm)
+            else:
+                imm = self.decodeNum(imm)
             a.append(r1)
             a.append(imm)
         elif(type == 'C'):
